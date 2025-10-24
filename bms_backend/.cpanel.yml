@@ -1,0 +1,10 @@
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/rubyzxyz/bms_backend/bms_backend
+    - /bin/cp -R * $DEPLOYPATH
+    - cd $DEPLOYPATH
+    - /opt/cpanel/composer/bin/composer install --optimize-autoloader --no-dev
+    - /usr/local/bin/php $DEPLOYPATH/artisan migrate --force
+    - /usr/local/bin/php $DEPLOYPATH/artisan config:cache
+    - /usr/local/bin/php $DEPLOYPATH/artisan route:cache
+    - /usr/local/bin/php $DEPLOYPATH/artisan view:cache
