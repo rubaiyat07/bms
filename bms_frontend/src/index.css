@@ -1,0 +1,288 @@
+@import "tailwindcss";
+
+/* Root Variables */
+:root {
+  --primary-blue: #BDD4FF;
+  --primary-blue-light: #D9E7FF;
+  --primary-blue-lighter: #EBF3FF;
+  --primary-blue-dark: #8FB3FF;
+  --primary-blue-darker: #6B9AFF;
+  
+  /* Pastel Colors for Buttons */
+  --pastel-red: #FFB3BA;
+  --pastel-red-dark: #FF8A93;
+  --pastel-orange: #FFCDA3;
+  --pastel-orange-dark: #FFB380;
+  --pastel-yellow: #FFFAAB;
+  --pastel-yellow-dark: #FFEB7A;
+  --pastel-green: #B4F8C8;
+  --pastel-green-dark: #8FE6A8;
+  
+  --bg-dark: #152a3f;
+  --bg-darker: #031636;
+  --bg-card: #1A1F26;
+  --bg-card-hover: #242930;
+  --text-primary: #FFFFFF;
+  --text-secondary: #A0A0A0;
+  --text-tertiary: #6B7280;
+  --border-color: rgba(189, 212, 255, 0.1);
+}
+
+/* Global Styles */
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+}
+
+/* Custom Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 1s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.8s ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.8s ease-out;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-lighter) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-darker);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-blue-dark);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-blue);
+}
+
+/* Utility Classes */
+.backdrop-blur-glass {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.card-gradient {
+  background: linear-gradient(135deg, rgba(189, 212, 255, 0.05) 0%, rgba(189, 212, 255, 0.02) 100%);
+}
+
+.border-gradient {
+  border: 1px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(135deg, rgba(189, 212, 255, 0.3), rgba(189, 212, 255, 0.1));
+}
+
+/* Pastel Button Styles */
+.btn-pastel-red {
+  background: linear-gradient(135deg, var(--pastel-red) 0%, var(--pastel-red-dark) 100%);
+  color: #1A1F26;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-pastel-red:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(255, 179, 186, 0.4);
+}
+
+.btn-pastel-orange {
+  background: linear-gradient(135deg, var(--pastel-orange) 0%, var(--pastel-orange-dark) 100%);
+  color: #1A1F26;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-pastel-orange:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(255, 205, 163, 0.4);
+}
+
+.btn-pastel-yellow {
+  background: linear-gradient(135deg, var(--pastel-yellow) 0%, var(--pastel-yellow-dark) 100%);
+  color: #1A1F26;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-pastel-yellow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(255, 250, 171, 0.4);
+}
+
+.btn-pastel-green {
+  background: linear-gradient(135deg, var(--pastel-green) 0%, var(--pastel-green-dark) 100%);
+  color: #1A1F26;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-pastel-green:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(180, 248, 200, 0.4);
+}
+
+/* Button Outline Variants */
+.btn-outline-red {
+  background: transparent;
+  color: var(--pastel-red);
+  border: 2px solid var(--pastel-red);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-outline-red:hover {
+  background: var(--pastel-red);
+  color: #1A1F26;
+}
+
+.btn-outline-orange {
+  background: transparent;
+  color: var(--pastel-orange);
+  border: 2px solid var(--pastel-orange);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-outline-orange:hover {
+  background: var(--pastel-orange);
+  color: #1A1F26;
+}
+
+.btn-outline-yellow {
+  background: transparent;
+  color: var(--pastel-yellow);
+  border: 2px solid var(--pastel-yellow);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-outline-yellow:hover {
+  background: var(--pastel-yellow);
+  color: #1A1F26;
+}
+
+.btn-outline-green {
+  background: transparent;
+  color: var(--pastel-green);
+  border: 2px solid var(--pastel-green);
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-outline-green:hover {
+  background: var(--pastel-green);
+  color: #1A1F26;
+}
