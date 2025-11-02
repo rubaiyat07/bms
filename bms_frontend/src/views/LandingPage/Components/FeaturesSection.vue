@@ -149,7 +149,7 @@ const features = [
 <style scoped>
 .features-section {
   padding: 5rem 1rem;
-  background: #0F1419;
+  background: #f8fafc;
 }
 
 .features-header {
@@ -161,7 +161,7 @@ const features = [
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, #BDD4FF 0%, #EBF3FF 100%);
+  background: linear-gradient(135deg, #2a3547 0%, #2c4264 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -175,7 +175,7 @@ const features = [
 
 .features-subtitle {
   font-size: 1.125rem;
-  color: #9CA3AF;
+  color: #374151;
 }
 
 .features-grid {
@@ -197,7 +197,7 @@ const features = [
 }
 
 .feature-card {
-  background: linear-gradient(135deg, rgba(189, 212, 255, 0.05) 0%, rgba(189, 212, 255, 0.02) 100%);
+  background: linear-gradient(135deg, rgba(189, 212, 255, 0.411) 0%, rgba(189, 212, 255, 0.02) 100%);
   border-radius: 1rem;
   padding: 2rem;
   border: 1px solid rgba(189, 212, 255, 0.1);
@@ -228,42 +228,42 @@ const features = [
 .icon-wrapper-blue {
   background: linear-gradient(135deg, rgba(189, 212, 255, 0.2) 0%, rgba(143, 179, 255, 0.2) 100%);
   border: 2px solid rgba(189, 212, 255, 0.3);
-  color: #BDD4FF;
+  color: #8ab2fc;
 }
 
 .icon-wrapper-orange {
   background: linear-gradient(135deg, rgba(255, 205, 163, 0.2) 0%, rgba(255, 179, 128, 0.2) 100%);
   border: 2px solid rgba(255, 205, 163, 0.3);
-  color: #FFCDA3;
+  color: #ffbf8b;
 }
 
 .icon-wrapper-green {
   background: linear-gradient(135deg, rgba(180, 248, 200, 0.2) 0%, rgba(143, 230, 168, 0.2) 100%);
   border: 2px solid rgba(180, 248, 200, 0.3);
-  color: #B4F8C8;
+  color: #6ffa99;
 }
 
 .icon-wrapper-red {
   background: linear-gradient(135deg, rgba(255, 179, 186, 0.2) 0%, rgba(255, 138, 147, 0.2) 100%);
   border: 2px solid rgba(255, 179, 186, 0.3);
-  color: #FFB3BA;
+  color: #ff8692;
 }
 
 .icon-wrapper-yellow {
-  background: linear-gradient(135deg, rgba(255, 250, 171, 0.2) 0%, rgba(255, 235, 122, 0.2) 100%);
-  border: 2px solid rgba(255, 250, 171, 0.3);
-  color: #FFFAAB;
+  background: linear-gradient(135deg, rgba(255, 249, 171, 0.616) 0%, rgba(255, 235, 122, 0.2) 100%);
+  border: 2px solid rgba(255, 249, 171, 0.829);
+  color: #fff564;
 }
 
 .feature-title {
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 0.75rem;
-  color: white;
+  color: #1F2937;
 }
 
 .feature-description {
-  color: #D1D5DB;
+  color: #374151;
   font-size: 0.875rem;
   margin-bottom: 1rem;
   line-height: 1.5;
@@ -279,7 +279,7 @@ const features = [
 }
 
 .feature-list-item {
-  color: #9CA3AF;
+  color: #374151;
   font-size: 0.875rem;
   padding-left: 1.25rem;
   position: relative;

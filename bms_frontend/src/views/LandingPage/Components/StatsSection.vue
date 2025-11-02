@@ -25,21 +25,21 @@ const stats = [
 <style scoped>
 .stats-section {
   padding: 5rem 1rem;
-  background: linear-gradient(180deg, #0A0E13 0%, #0F1419 100%);
+  background: linear-gradient(180deg, #51709c 0%, #d4e0f1 100%);
 }
 
 .stat-card {
   text-align: center;
   padding: 2rem 1rem;
   border-radius: 1rem;
-  background: linear-gradient(135deg, rgba(189, 212, 255, 0.05) 0%, rgba(189, 212, 255, 0.02) 100%);
-  border: 1px solid rgba(189, 212, 255, 0.1);
+  background: linear-gradient(135deg, rgba(4, 18, 43, 0.05) 0%, rgba(235, 242, 255, 0) 100%);
+  border: 1px solid rgba(251, 253, 255, 0.1);
   transition: all 0.3s ease;
 }
 
 .stat-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(189, 212, 255, 0.3);
+  border-color: rgba(236, 252, 255, 0.3);
   background: linear-gradient(135deg, rgba(189, 212, 255, 0.08) 0%, rgba(189, 212, 255, 0.04) 100%);
 }
 
@@ -60,7 +60,7 @@ const stats = [
 }
 
 .stat-label {
-  color: #9CA3AF;
+  color: #ffffff;
   font-size: 1rem;
 }
 </style>

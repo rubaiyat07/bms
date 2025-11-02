@@ -1,33 +1,20 @@
 <template>
-  <div class="register-page">
-    <div class="register-bg">
-      <div class="register-bg-blur register-bg-blur-1"></div>
-      <div class="register-bg-blur register-bg-blur-2"></div>
+  <div class="login-page">
+    <div class="login-bg">
+      <div class="login-bg-blur login-bg-blur-1"></div>
+      <div class="login-bg-blur login-bg-blur-2"></div>
     </div>
 
-    <div class="register-container">
-      <div class="register-card">
-        <div class="register-header">
-          <h2 class="register-title">
-            Create your account
+    <div class="login-container">
+      <div class="login-card">
+        <div class="login-header">
+          <h2 class="login-title">
+            Sign in to your account
           </h2>
-          <p class="register-subtitle">Join thousands of companies transforming their business</p>
+          <p class="login-subtitle">Welcome back! Please enter your details</p>
         </div>
-        
-        <form class="register-form" @submit.prevent="handleRegister">
-          <div class="form-group">
-            <label for="name" class="form-label">Full Name</label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              required
-              class="form-input"
-              placeholder="John Doe"
-              v-model="form.name"
-            />
-          </div>
 
+        <form class="login-form" @submit.prevent="handleLogin">
           <div class="form-group">
             <label for="email" class="form-label">Email address</label>
             <input
@@ -65,12 +52,11 @@
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
             </span>
-            <span v-else>Create Account</span>
+            <span v-else>Sign In</span>
           </button>
 
           <p class="form-footer">
-            Already have an account? 
-            <router-link to="/login" class="form-link">Sign in</router-link>
+            Registration is available through manual admin setup only.
           </p>
         </form>
       </div>
@@ -81,24 +67,31 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useAuthStore } from '../../stores/auth.js'
 
 const router = useRouter()
+const authStore = useAuthStore()
 const loading = ref(false)
 const form = ref({
-  name: '',
   email: '',
   password: ''
 })
 
-const handleRegister = async () => {
+const handleLogin = async () => {
   loading.value = true
   try {
-    // Implement registration logic here
-    console.log('Registering user:', form.value)
-    // Redirect to login or dashboard after successful registration
-    router.push('/')
+    // Call auth store login with form credentials
+    const result = await authStore.login(form.value)
+    if (result.success) {
+      // Redirect to admin dashboard after successful login
+      router.push('/admin/dashboard')
+    } else {
+      console.error('Login failed:', result.message)
+      // TODO: Show error message to user
+    }
   } catch (error) {
-    console.error('Registration failed:', error)
+    console.error('Login failed:', error)
+    // TODO: Show error message to user
   } finally {
     loading.value = false
   }
@@ -106,30 +99,30 @@ const handleRegister = async () => {
 </script>
 
 <style scoped>
-.register-page {
+.login-page {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #0F1419;
+  background: linear-gradient(180deg, #51709c 0%, #d4e0f1 100%);
   padding: 3rem 1rem;
   position: relative;
   overflow: hidden;
 }
 
-.register-bg {
+.login-bg {
   position: absolute;
   inset: 0;
   opacity: 0.1;
 }
 
-.register-bg-blur {
+.login-bg-blur {
   position: absolute;
   border-radius: 9999px;
   filter: blur(100px);
 }
 
-.register-bg-blur-1 {
+.login-bg-blur-1 {
   top: -5rem;
   left: -5rem;
   width: 30rem;
@@ -137,7 +130,7 @@ const handleRegister = async () => {
   background: linear-gradient(135deg, #BDD4FF 0%, #8FB3FF 100%);
 }
 
-.register-bg-blur-2 {
+.login-bg-blur-2 {
   bottom: -5rem;
   right: -5rem;
   width: 30rem;
@@ -145,15 +138,16 @@ const handleRegister = async () => {
   background: linear-gradient(135deg, #6B9AFF 0%, #BDD4FF 100%);
 }
 
-.register-container {
+.login-container {
   max-width: 28rem;
   width: 100%;
   position: relative;
   z-index: 10;
 }
 
-.register-card {
+.login-card {
   background: linear-gradient(135deg, rgba(189, 212, 255, 0.08) 0%, rgba(189, 212, 255, 0.03) 100%);
+  margin-top: 50px;
   border-radius: 1.5rem;
   padding: 3rem;
   backdrop-filter: blur(12px);
@@ -161,24 +155,24 @@ const handleRegister = async () => {
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
 }
 
-.register-header {
+.login-header {
   text-align: center;
   margin-bottom: 2rem;
 }
 
-.register-title {
+.login-title {
   font-size: 2rem;
   font-weight: 700;
   color: white;
   margin-bottom: 0.5rem;
 }
 
-.register-subtitle {
-  color: #9CA3AF;
+.login-subtitle {
+  color: #cadeff;
   font-size: 0.875rem;
 }
 
-.register-form {
+.login-form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -193,16 +187,16 @@ const handleRegister = async () => {
 .form-label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #D1D5DB;
+  color: #dce7f7;
 }
 
 .form-input {
   width: 100%;
   padding: 0.75rem 1rem;
-  background: #1A1F26;
+  background: #353b42;
   border: 1px solid rgba(189, 212, 255, 0.2);
   border-radius: 0.5rem;
-  color: white;
+  color: rgb(214, 214, 214);
   font-size: 1rem;
   transition: all 0.3s ease;
 }
@@ -220,7 +214,7 @@ const handleRegister = async () => {
 .submit-button {
   width: 100%;
   padding: 0.875rem;
-  background: linear-gradient(135deg, #8FB3FF 0%, #BDD4FF 100%);
+  background: linear-gradient(135deg, #8c9bec 0%, #BDD4FF 100%);
   border: none;
   border-radius: 0.5rem;
   font-weight: 600;
@@ -250,7 +244,7 @@ const handleRegister = async () => {
 
 .form-footer {
   text-align: center;
-  color: #9CA3AF;
+  color: #646870;
   font-size: 0.875rem;
 }
 

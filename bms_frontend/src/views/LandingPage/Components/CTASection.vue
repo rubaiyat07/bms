@@ -6,20 +6,25 @@
           <div class="cta-bg-blur cta-bg-blur-1"></div>
           <div class="cta-bg-blur cta-bg-blur-2"></div>
         </div>
-        
+
         <div class="cta-content">
           <h2 class="cta-heading">
             Ready to Streamline Your Branch Network?
           </h2>
           <p class="cta-subheading">
-            Start managing all your branches efficiently. Free 14-day trial with full features. No credit card required.
+            Start managing all your branches efficiently. Access your centralized dashboard to monitor and control all operations.
           </p>
-          <router-link to="/register" class="cta-button">
-            Start Your Free Trial
-            <ArrowRight class="w-6 h-6 group-hover:translate-x-2 transition-transform" />
-          </router-link>
+          <div class="cta-buttons">
+            <router-link to="/login" class="cta-button">
+              Access Dashboard
+              <ArrowRight class="w-6 h-6 group-hover:translate-x-2 transition-transform" />
+            </router-link>
+            <router-link to="/contact" class="cta-button-secondary">
+              Contact Us
+            </router-link>
+          </div>
           <p class="cta-note">
-            ✓ Setup in minutes  ✓ No technical knowledge required  ✓ Cancel anytime
+            ✓ Centralized control  ✓ Real-time monitoring  ✓ Easy management
           </p>
         </div>
       </div>
@@ -101,6 +106,21 @@ import { ArrowRight } from 'lucide-vue-next'
   margin-right: auto;
 }
 
+.cta-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .cta-buttons {
+    flex-direction: row;
+    gap: 1.5rem;
+  }
+}
+
 .cta-button {
   display: inline-flex;
   align-items: center;
@@ -119,6 +139,27 @@ import { ArrowRight } from 'lucide-vue-next'
 .cta-button:hover {
   transform: scale(1.05);
   box-shadow: 0 20px 40px rgba(189, 212, 255, 0.5);
+}
+
+.cta-button-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.25rem 2.5rem;
+  background: transparent;
+  border: 2px solid rgba(189, 212, 255, 0.5);
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #BDD4FF;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.cta-button-secondary:hover {
+  background: rgba(189, 212, 255, 0.1);
+  border-color: rgba(189, 212, 255, 0.8);
+  transform: scale(1.05);
 }
 
 .cta-note {

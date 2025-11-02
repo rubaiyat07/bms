@@ -125,7 +125,7 @@ const metrics = [
 }
 
 .metrics-card {
-  background: linear-gradient(135deg, rgba(189, 212, 255, 0.08) 0%, rgba(189, 212, 255, 0.03) 100%);
+  background: linear-gradient(135deg, rgba(189, 212, 255, 0.616) 0%, rgba(189, 212, 255, 0.03) 100%);
   border-radius: 1rem;
   padding: 2rem;
   backdrop-filter: blur(12px);
@@ -133,7 +133,7 @@ const metrics = [
 }
 
 .metric-item {
-  background: #1A1F26;
+  background: #1a1f2644;
   border-radius: 0.5rem;
   padding: 1rem;
   transition: all 0.3s ease;
@@ -141,7 +141,7 @@ const metrics = [
 }
 
 .metric-item:hover {
-  background: #242930;
+  background: #242930bd;
   transform: translateY(-2px);
 }
 
@@ -157,20 +157,25 @@ const metrics = [
 }
 
 .metric-change {
-  color: #BDD4FF;
+  color: #3a3f47;
+  font-weight: 700;
+}
+
+.metric-change:hover {
+  color: #a6c6fd;
   font-weight: 700;
 }
 
 .metric-progress-bg {
   height: 0.5rem;
-  background: #374151;
+  background: #3741518f;
   border-radius: 9999px;
   overflow: hidden;
 }
 
 .metric-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #8FB3FF 0%, #BDD4FF 100%);
+  background: linear-gradient(90deg, #8fb3ff 0%, #BDD4FF 100%);
   border-radius: 9999px;
   transition: width 1s ease;
 }

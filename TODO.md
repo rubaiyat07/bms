@@ -1,7 +1,7 @@
-# TODO: Fix Tailwind CSS Installation Issue
+# TODO: Update Frontend Routing
 
-- [x] Create bms_frontend/postcss.config.js with Tailwind and autoprefixer plugins
-- [x] Create bms_frontend/src/index.css with @import "tailwindcss";
-- [x] Edit bms_frontend/src/main.ts to import './index.css'
-- [x] Run npm run dev to test
-- [x] Optionally, add Tailwind classes to App.vue to verify
+- [x] Remove the '/dashboard' route pointing to non-existent file
+- [x] Add '/finance' route for Finance.vue
+- [x] Add '/admin/finance' route for Admin/Finance.vue
+- [x] Add '/admin/users' route for Admin/Users.vue
+- [x] Fix redirect in Login.vue after successful login

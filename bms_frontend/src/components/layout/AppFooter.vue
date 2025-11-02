@@ -6,10 +6,10 @@
         <div class="footer-column">
           <div class="footer-logo">
             <div class="logo-icon">BMS</div>
-            <span class="logo-text">Business Manager</span>
+            <span class="logo-text">Branch Manager</span>
           </div>
           <p class="footer-description">
-            Empowering businesses with intelligent management solutions.
+            Empowering businesses with intelligent branch management solutions.
           </p>
           <div class="footer-social">
             <a href="#" class="social-link">Twitter</a>

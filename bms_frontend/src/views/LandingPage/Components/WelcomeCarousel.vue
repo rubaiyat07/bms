@@ -197,7 +197,7 @@ onUnmounted(() => {
 <style scoped>
 .welcome-carousel-section {
   padding: 5rem 1rem;
-  background: linear-gradient(180deg, #0F1419 0%, #0A0E13 100%);
+  background: linear-gradient(180deg, #51709c 0%, #d4e0f1 100%);
 }
 
 .carousel-header {
@@ -209,7 +209,7 @@ onUnmounted(() => {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  background: linear-gradient(135deg, #BDD4FF 0%, #EBF3FF 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #EBF3FF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -223,7 +223,7 @@ onUnmounted(() => {
 
 .carousel-subtitle {
   font-size: 1.125rem;
-  color: #9CA3AF;
+  color: #f6f7ca;
 }
 
 .carousel-container {
@@ -248,11 +248,11 @@ onUnmounted(() => {
 }
 
 .slide-content {
-  background: linear-gradient(135deg, rgba(189, 212, 255, 0.08) 0%, rgba(189, 212, 255, 0.03) 100%);
+  background: linear-gradient(135deg, rgba(14, 14, 14, 0.253) 0%, rgba(255, 255, 255, 0.03) 100%);
   border-radius: 1.5rem;
   padding: 3rem;
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(189, 212, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
@@ -324,7 +324,7 @@ onUnmounted(() => {
 
 .slide-description {
   font-size: 1.125rem;
-  color: #D1D5DB;
+  color: #f7f9fd;
   margin-bottom: 1.5rem;
   line-height: 1.6;
 }
@@ -343,7 +343,7 @@ onUnmounted(() => {
   align-items: center;
   gap: 0.75rem;
   font-size: 1rem;
-  color: #E5E7EB;
+  color: #ffffff;
 }
 
 .feature-icon {

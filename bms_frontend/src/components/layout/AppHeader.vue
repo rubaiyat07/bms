@@ -4,7 +4,7 @@
       <div class="header-logo">
         <router-link to="/" class="logo-link">
           <div class="logo-icon">BMS</div>
-          <span class="logo-text">Business Manager</span>
+          <span class="logo-text">Branch Manager</span>
         </router-link>
       </div>
 
@@ -13,11 +13,12 @@
         <router-link to="/features" class="nav-link">Features</router-link>
         <router-link to="/pricing" class="nav-link">Pricing</router-link>
         <router-link to="/about" class="nav-link">About</router-link>
+        <router-link to="/contact" class="nav-link">Contact</router-link>
       </nav>
 
       <div class="header-actions">
         <router-link to="/login" class="btn-login">Sign In</router-link>
-        <router-link to="/register" class="btn-register">Get Started</router-link>
+        <router-link to="/login" class="btn-register">Get Started</router-link>
       </div>
     </div>
   </header>

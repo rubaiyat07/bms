@@ -1,8 +1,8 @@
 <template>
-  <div class="min-h-screen flex flex-col">
+  <div class="min-h-screen flex flex-col bg-slate-50">
     <!-- Header/Navbar -->
     <AppHeader v-if="showHeader" />
-    
+
     <!-- Main Content Area with Router Outlet -->
     <main class="flex-1">
       <router-view v-slot="{ Component }">
@@ -11,7 +11,7 @@
         </transition>
       </router-view>
     </main>
-    
+
     <!-- Footer -->
     <AppFooter v-if="showFooter" />
   </div>
@@ -25,7 +25,7 @@ import AppFooter from './AppFooter.vue'
 
 const route = useRoute()
 
-// Hide header/footer on certain pages like login/register
+// Hide header/footer on certain pages like login
 const showHeader = computed(() => !route.meta.hideHeader)
 const showFooter = computed(() => !route.meta.hideFooter)
 </script>

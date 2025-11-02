@@ -1,37 +1,73 @@
 @import "tailwindcss";
 
-/* Root Variables */
+/* Root Variables - Bright Theme */
 :root {
-  --primary-blue: #BDD4FF;
-  --primary-blue-light: #D9E7FF;
-  --primary-blue-lighter: #EBF3FF;
-  --primary-blue-dark: #8FB3FF;
-  --primary-blue-darker: #6B9AFF;
+  /* Primary Brand Colors - Brighter */
+  --primary-blue: #4A90E2;
+  --primary-blue-light: #6BA3E8;
+  --primary-blue-lighter: #8BB7EE;
+  --primary-blue-dark: #3A7BC8;
+  --primary-blue-darker: #2A6BB8;
   
-  /* Pastel Colors for Buttons */
-  --pastel-red: #FFB3BA;
-  --pastel-red-dark: #FF8A93;
-  --pastel-orange: #FFCDA3;
-  --pastel-orange-dark: #FFB380;
-  --pastel-yellow: #FFFAAB;
-  --pastel-yellow-dark: #FFEB7A;
-  --pastel-green: #B4F8C8;
-  --pastel-green-dark: #8FE6A8;
+  /* Accent Colors - Vibrant */
+  --accent-purple: #8B5CF6;
+  --accent-pink: #EC4899;
+  --accent-cyan: #06B6D4;
+  --accent-orange: #F97316;
   
-  --bg-dark: #152a3f;
-  --bg-darker: #031636;
-  --bg-card: #1A1F26;
-  --bg-card-hover: #242930;
-  --text-primary: #FFFFFF;
-  --text-secondary: #A0A0A0;
-  --text-tertiary: #6B7280;
-  --border-color: rgba(189, 212, 255, 0.1);
+  /* Pastel Colors for Buttons - Brighter */
+  --pastel-red: #FF6B7A;
+  --pastel-red-dark: #FF5268;
+  --pastel-orange: #FFA756;
+  --pastel-orange-dark: #FF9142;
+  --pastel-yellow: #FFD93D;
+  --pastel-yellow-dark: #FFC727;
+  --pastel-green: #6BCF7F;
+  --pastel-green-dark: #51BB6A;
+  --pastel-blue: #5DADE2;
+  --pastel-purple: #AF7AC5;
+  
+  /* Background Colors - Lighter */
+  --bg-primary: #F8FAFC;
+  --bg-secondary: #F1F5F9;
+  --bg-tertiary: #E2E8F0;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F8FAFC;
+  
+  /* Text Colors */
+  --text-primary: #1E293B;
+  --text-secondary: #475569;
+  --text-tertiary: #64748B;
+  --text-muted: #94A3B8;
+  
+  /* Border Colors */
+  --border-color: #E2E8F0;
+  --border-color-hover: #CBD5E1;
+  
+  /* Shadow Colors */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+  
+  /* Gradient Backgrounds */
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --gradient-success: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  --gradient-warning: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
 }
 
 /* Global Styles */
-body {
-  background-color: var(--bg-dark);
-  color: var(--text-primary);
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  
+  body {
+    @apply bg-slate-50 text-slate-900;
+    background: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+  }
 }
 
 /* Custom Animations */
@@ -95,6 +131,15 @@ body {
   }
 }
 
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(74, 144, 226, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(74, 144, 226, 0.6);
+  }
+}
+
 .animate-fade-in {
   animation: fade-in 1s ease-out;
 }
@@ -115,174 +160,400 @@ body {
   animation: float 6s ease-in-out infinite;
 }
 
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
 /* Gradient Text */
 .gradient-text {
-  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-lighter) 100%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Custom Scrollbar */
+.gradient-text-blue {
+  background: linear-gradient(135deg, #4A90E2 0%, #2A6BB8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-vibrant {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Custom Scrollbar - Brighter */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 12px;
+  height: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-darker);
+  background: var(--bg-secondary);
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--primary-blue-dark);
-  border-radius: 5px;
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-dark) 100%);
+  border-radius: 10px;
+  border: 2px solid var(--bg-secondary);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-blue);
+  background: linear-gradient(135deg, var(--primary-blue-light) 0%, var(--primary-blue) 100%);
 }
 
 /* Utility Classes */
-.backdrop-blur-glass {
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+@layer components {
+  .backdrop-blur-glass {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  .card-gradient {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
+  }
+
+  .card-bright {
+    background: white;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s ease;
+  }
+
+  .card-bright:hover {
+    box-shadow: var(--shadow-xl);
+    border-color: var(--primary-blue-light);
+    transform: translateY(-2px);
+  }
+
+  /* Button Styles - Vibrant */
+  .btn-primary {
+    @apply px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 transform hover:scale-105;
+  }
+  
+  .btn-secondary {
+    @apply px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 transform hover:scale-105;
+  }
+
+  .btn-success {
+    @apply px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-green-500/50 transition-all duration-300 transform hover:scale-105;
+  }
+
+  .btn-warning {
+    @apply px-6 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-orange-500/50 transition-all duration-300 transform hover:scale-105;
+  }
+
+  .btn-outline {
+    @apply px-6 py-3 bg-white text-blue-600 rounded-lg font-semibold border-2 border-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-300;
+  }
+
+  /* Pastel Button Styles - Brighter */
+  .btn-pastel-red {
+    background: linear-gradient(135deg, #FF6B7A 0%, #FF5268 100%);
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 107, 122, 0.3);
+  }
+
+  .btn-pastel-red:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 107, 122, 0.5);
+  }
+
+  .btn-pastel-orange {
+    background: linear-gradient(135deg, #FFA756 0%, #FF9142 100%);
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 167, 86, 0.3);
+  }
+
+  .btn-pastel-orange:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 167, 86, 0.5);
+  }
+
+  .btn-pastel-yellow {
+    background: linear-gradient(135deg, #FFD93D 0%, #FFC727 100%);
+    color: #1E293B;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 217, 61, 0.3);
+  }
+
+  .btn-pastel-yellow:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(255, 217, 61, 0.5);
+  }
+
+  .btn-pastel-green {
+    background: linear-gradient(135deg, #6BCF7F 0%, #51BB6A 100%);
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(107, 207, 127, 0.3);
+  }
+
+  .btn-pastel-green:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(107, 207, 127, 0.5);
+  }
+
+  .btn-pastel-blue {
+    background: linear-gradient(135deg, #5DADE2 0%, #4A90E2 100%);
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(93, 173, 226, 0.3);
+  }
+
+  .btn-pastel-blue:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(93, 173, 226, 0.5);
+  }
+
+  .btn-pastel-purple {
+    background: linear-gradient(135deg, #AF7AC5 0%, #9B59B6 100%);
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(175, 122, 197, 0.3);
+  }
+
+  .btn-pastel-purple:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(175, 122, 197, 0.5);
+  }
+
+  /* Button Outline Variants - Vibrant */
+  .btn-outline-red {
+    background: white;
+    color: #FF6B7A;
+    border: 2px solid #FF6B7A;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .btn-outline-red:hover {
+    background: linear-gradient(135deg, #FF6B7A 0%, #FF5268 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 107, 122, 0.3);
+  }
+
+  .btn-outline-orange {
+    background: white;
+    color: #FFA756;
+    border: 2px solid #FFA756;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .btn-outline-orange:hover {
+    background: linear-gradient(135deg, #FFA756 0%, #FF9142 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 167, 86, 0.3);
+  }
+
+  .btn-outline-yellow {
+    background: white;
+    color: #FFC727;
+    border: 2px solid #FFD93D;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .btn-outline-yellow:hover {
+    background: linear-gradient(135deg, #FFD93D 0%, #FFC727 100%);
+    color: #1E293B;
+    box-shadow: 0 4px 15px rgba(255, 217, 61, 0.3);
+  }
+
+  .btn-outline-green {
+    background: white;
+    color: #6BCF7F;
+    border: 2px solid #6BCF7F;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .btn-outline-green:hover {
+    background: linear-gradient(135deg, #6BCF7F 0%, #51BB6A 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(107, 207, 127, 0.3);
+  }
+
+  .btn-outline-blue {
+    background: white;
+    color: #5DADE2;
+    border: 2px solid #5DADE2;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .btn-outline-blue:hover {
+    background: linear-gradient(135deg, #5DADE2 0%, #4A90E2 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(93, 173, 226, 0.3);
+  }
+
+  /* Card Styles */
+  .card {
+    @apply bg-white rounded-xl shadow-md border border-slate-200 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1;
+  }
+
+  .card-colored {
+    @apply bg-gradient-to-br from-blue-50 to-purple-50 rounded-xl shadow-md border border-blue-100 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1;
+  }
+
+  /* Input Styles */
+  .input-field {
+    @apply w-full px-4 py-3 rounded-lg border-2 border-slate-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none transition-all duration-200 bg-white;
+  }
+
+  .input-field:focus {
+    box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.1);
+  }
+
+  /* Badge Styles */
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .badge-primary {
+    @apply bg-blue-100 text-blue-700;
+  }
+
+  .badge-success {
+    @apply bg-green-100 text-green-700;
+  }
+
+  .badge-warning {
+    @apply bg-orange-100 text-orange-700;
+  }
+
+  .badge-danger {
+    @apply bg-red-100 text-red-700;
+  }
+
+  /* Gradient Backgrounds */
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  .bg-gradient-blue {
+    background: linear-gradient(135deg, #4A90E2 0%, #2A6BB8 100%);
+  }
+
+  .bg-gradient-purple-pink {
+    background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+  }
+
+  .bg-gradient-cyan {
+    background: linear-gradient(135deg, #06B6D4 0%, #3B82F6 100%);
+  }
+
+  .bg-gradient-warm {
+    background: linear-gradient(135deg, #F97316 0%, #DC2626 100%);
+  }
+
+  /* Text Shadows */
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Glass Effect */
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.8);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  /* Hover Lift Effect */
+  .hover-lift {
+    transition: all 0.3s ease;
+  }
+
+  .hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+  }
 }
 
-.card-gradient {
-  background: linear-gradient(135deg, rgba(189, 212, 255, 0.05) 0%, rgba(189, 212, 255, 0.02) 100%);
+/* Page Specific Styles */
+.page-transition {
+  animation: fade-in 0.5s ease-out;
 }
 
-.border-gradient {
-  border: 1px solid;
-  border-image-slice: 1;
-  border-image-source: linear-gradient(135deg, rgba(189, 212, 255, 0.3), rgba(189, 212, 255, 0.1));
+/* Loading States */
+.loading-shimmer {
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 0%,
+    #e0e0e0 50%,
+    #f0f0f0 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
 }
 
-/* Pastel Button Styles */
-.btn-pastel-red {
-  background: linear-gradient(135deg, var(--pastel-red) 0%, var(--pastel-red-dark) 100%);
-  color: #1A1F26;
-  font-weight: 600;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  transition: all 0.3s ease;
-  border: none;
-  cursor: pointer;
+/* Focus Visible Styles */
+:focus-visible {
+  outline: 3px solid #4A90E2;
+  outline-offset: 2px;
 }
 
-.btn-pastel-red:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(255, 179, 186, 0.4);
-}
-
-.btn-pastel-orange {
-  background: linear-gradient(135deg, var(--pastel-orange) 0%, var(--pastel-orange-dark) 100%);
-  color: #1A1F26;
-  font-weight: 600;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  transition: all 0.3s ease;
-  border: none;
-  cursor: pointer;
-}
-
-.btn-pastel-orange:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(255, 205, 163, 0.4);
-}
-
-.btn-pastel-yellow {
-  background: linear-gradient(135deg, var(--pastel-yellow) 0%, var(--pastel-yellow-dark) 100%);
-  color: #1A1F26;
-  font-weight: 600;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  transition: all 0.3s ease;
-  border: none;
-  cursor: pointer;
-}
-
-.btn-pastel-yellow:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(255, 250, 171, 0.4);
-}
-
-.btn-pastel-green {
-  background: linear-gradient(135deg, var(--pastel-green) 0%, var(--pastel-green-dark) 100%);
-  color: #1A1F26;
-  font-weight: 600;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  transition: all 0.3s ease;
-  border: none;
-  cursor: pointer;
-}
-
-.btn-pastel-green:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(180, 248, 200, 0.4);
-}
-
-/* Button Outline Variants */
-.btn-outline-red {
-  background: transparent;
-  color: var(--pastel-red);
-  border: 2px solid var(--pastel-red);
-  font-weight: 600;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.btn-outline-red:hover {
-  background: var(--pastel-red);
-  color: #1A1F26;
-}
-
-.btn-outline-orange {
-  background: transparent;
-  color: var(--pastel-orange);
-  border: 2px solid var(--pastel-orange);
-  font-weight: 600;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.btn-outline-orange:hover {
-  background: var(--pastel-orange);
-  color: #1A1F26;
-}
-
-.btn-outline-yellow {
-  background: transparent;
-  color: var(--pastel-yellow);
-  border: 2px solid var(--pastel-yellow);
-  font-weight: 600;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.btn-outline-yellow:hover {
-  background: var(--pastel-yellow);
-  color: #1A1F26;
-}
-
-.btn-outline-green {
-  background: transparent;
-  color: var(--pastel-green);
-  border: 2px solid var(--pastel-green);
-  font-weight: 600;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.btn-outline-green:hover {
-  background: var(--pastel-green);
-  color: #1A1F26;
+/* Selection Colors */
+::selection {
+  background: #4A90E2;
+  color: white;
 }
