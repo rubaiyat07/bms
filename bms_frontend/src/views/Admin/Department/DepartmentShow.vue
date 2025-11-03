@@ -1,42 +1,42 @@
 <template>
-  <div class="branch-show">
+  <div class="department-show">
     <div class="page-header">
       <div class="header-content">
         <div>
-          <h1>{{ branch.name }}</h1>
-          <p>Branch Code: {{ branch.code }}</p>
+          <h1>{{ department.name }}</h1>
+          <p>Department Code: {{ department.code }}</p>
         </div>
         <div class="header-actions">
-          <router-link :to="`/admin/branches/${branch.id}/edit`" class="btn btn-primary">
+          <router-link :to="`/admin/departments/${department.id}/edit`" class="btn btn-primary">
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
             </svg>
-            Edit Branch
+            Edit Department
           </router-link>
           <button v-if="isAdmin" @click="showDeleteModal = true" class="btn btn-danger">
             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
             </svg>
-            Delete Branch
+            Delete Department
           </button>
           <button @click="$router.go(-1)" class="btn btn-secondary">Back to List</button>
         </div>
       </div>
     </div>
 
-    <div class="branch-content">
-      <!-- Branch Overview -->
+    <div class="department-content">
+      <!-- Department Overview -->
       <div class="overview-section">
-        <h2>Branch Overview</h2>
+        <h2>Department Overview</h2>
         <div class="overview-grid">
           <div class="overview-card">
             <div class="card-icon">
               <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
               </svg>
             </div>
             <div class="card-content">
-              <h3>{{ branch.users?.length || 0 }}</h3>
+              <h3>{{ department.users?.length || 0 }}</h3>
               <p>Total Employees</p>
             </div>
           </div>
@@ -48,7 +48,7 @@
               </svg>
             </div>
             <div class="card-content">
-              <h3>{{ branch.projects?.length || 0 }}</h3>
+              <h3>{{ department.projects?.length || 0 }}</h3>
               <p>Active Projects</p>
             </div>
           </div>
@@ -60,7 +60,7 @@
               </svg>
             </div>
             <div class="card-content">
-              <h3>{{ branch.performance_level }}</h3>
+              <h3>{{ department.performance_level }}</h3>
               <p>Performance Level</p>
             </div>
           </div>
@@ -72,54 +72,46 @@
               </svg>
             </div>
             <div class="card-content">
-              <h3>{{ branch.opening_date ? formatDate(branch.opening_date) : 'N/A' }}</h3>
-              <p>Opening Date</p>
+              <h3>{{ department.created_at ? formatDate(department.created_at) : 'N/A' }}</h3>
+              <p>Created Date</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Branch Details -->
+      <!-- Department Details -->
       <div class="details-section">
-        <h2>Branch Details</h2>
+        <h2>Department Details</h2>
         <div class="details-grid">
           <div class="detail-item">
-            <label>Branch Name</label>
-            <p>{{ branch.name }}</p>
+            <label>Department Name</label>
+            <p>{{ department.name }}</p>
           </div>
           <div class="detail-item">
-            <label>Branch Code</label>
-            <p>{{ branch.code }}</p>
+            <label>Department Code</label>
+            <p>{{ department.code }}</p>
           </div>
           <div class="detail-item full-width">
-            <label>Address</label>
-            <p>{{ branch.address }}</p>
-          </div>
-          <div class="detail-item">
-            <label>Contact Phone</label>
-            <p>{{ branch.contact_phone || 'Not provided' }}</p>
-          </div>
-          <div class="detail-item">
-            <label>Contact Email</label>
-            <p>{{ branch.contact_email || 'Not provided' }}</p>
+            <label>Description</label>
+            <p>{{ department.description || 'No description provided' }}</p>
           </div>
           <div class="detail-item">
             <label>Status</label>
-            <span :class="`status-badge status-${branch.status}`">{{ branch.status }}</span>
+            <span :class="`status-badge status-${department.status}`">{{ department.status }}</span>
           </div>
           <div class="detail-item">
-            <label>Manager</label>
-            <p>{{ branch.manager?.name || 'Not assigned' }}</p>
+            <label>Department Head</label>
+            <p>{{ department.head?.name || 'Not assigned' }}</p>
           </div>
         </div>
       </div>
 
       <!-- Projects Section -->
       <div class="projects-section">
-        <h2>Projects ({{ branch.projects?.length || 0 }})</h2>
+        <h2>Projects ({{ department.projects?.length || 0 }})</h2>
 
-        <div v-if="branch.projects?.length" class="projects-grid">
-          <div v-for="project in branch.projects" :key="project.id" class="project-card">
+        <div v-if="department.projects?.length" class="projects-grid">
+          <div v-for="project in department.projects" :key="project.id" class="project-card">
             <div class="project-header">
               <h3>{{ project.name }}</h3>
               <span :class="`status-badge status-${project.status}`">{{ project.status }}</span>
@@ -141,16 +133,16 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
           </svg>
           <h3>No Projects Yet</h3>
-          <p>This branch doesn't have any projects assigned yet.</p>
+          <p>This department doesn't have any projects assigned yet.</p>
         </div>
       </div>
 
       <!-- Employees Section -->
       <div class="employees-section">
-        <h2>Employees ({{ branch.users?.length || 0 }})</h2>
+        <h2>Employees ({{ department.users?.length || 0 }})</h2>
 
-        <div v-if="branch.users?.length" class="employees-grid">
-          <div v-for="user in branch.users" :key="user.id" class="employee-card">
+        <div v-if="department.users?.length" class="employees-grid">
+          <div v-for="user in department.users" :key="user.id" class="employee-card">
             <div class="employee-avatar">
               <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
@@ -172,16 +164,16 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
           </svg>
           <h3>No Employees Yet</h3>
-          <p>This branch doesn't have any employees assigned yet.</p>
+          <p>This department doesn't have any employees assigned yet.</p>
         </div>
       </div>
     </div>
 
-    <DeleteBranchModal
+    <DeleteDepartmentModal
       :show="showDeleteModal"
-      :branch="branch"
+      :department="department"
       @close="showDeleteModal = false"
-      @confirm="handleDeleteBranch"
+      @confirm="handleDeleteDepartment"
     />
   </div>
 </template>
@@ -192,14 +184,14 @@ import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { storeToRefs } from 'pinia'
 import { api } from '@/services/api'
-import DeleteBranchModal from './DeleteBranchModal.vue'
+import DeleteDepartmentModal from './DeleteDepartmentModal.vue'
 
 const route = useRoute()
 const router = useRouter()
 const authStore = useAuthStore()
 const { isInitialized, user } = storeToRefs(authStore)
 
-const branch = ref({})
+const department = ref({})
 const loading = ref(false)
 const showDeleteModal = ref(false)
 
@@ -210,38 +202,38 @@ const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString()
 }
 
-const fetchBranch = async () => {
+const fetchDepartment = async () => {
   try {
     loading.value = true
-    const response = await api.get(`/branches/${route.params.id}`)
+    const response = await api.get(`/departments/${route.params.id}`)
     if (response.success) {
-      branch.value = response.data
+      department.value = response.data
     }
   } catch (error) {
-    console.error('Error fetching branch:', error)
+    console.error('Error fetching department:', error)
   } finally {
     loading.value = false
   }
 }
 
-const handleDeleteBranch = async (reason: string) => {
+const handleDeleteDepartment = async (reason: string) => {
   try {
-    const response = await api.delete(`/branches/${branch.value.id}`, { reason })
+    const response = await api.delete(`/departments/${department.value.id}`, { reason })
     if (response.success) {
-      router.push('/admin/branches')
+      router.push('/admin/departments')
     }
   } catch (error) {
-    console.error('Error deleting branch:', error)
+    console.error('Error deleting department:', error)
   }
 }
 
 onMounted(() => {
-  fetchBranch()
+  fetchDepartment()
 })
 </script>
 
 <style scoped>
-.branch-show {
+.department-show {
   padding: 1rem;
   max-width: 1200px;
   margin: 0 auto;
@@ -274,7 +266,7 @@ onMounted(() => {
   gap: 1rem;
 }
 
-.branch-content {
+.department-content {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -384,11 +376,6 @@ onMounted(() => {
 .status-inactive {
   background-color: rgba(239, 68, 68, 0.1);
   color: #EF4444;
-}
-
-.status-suspended {
-  background-color: rgba(251, 191, 36, 0.1);
-  color: #F59E0B;
 }
 
 /* Projects and Employees Sections */

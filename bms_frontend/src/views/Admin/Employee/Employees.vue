@@ -5,54 +5,23 @@
       <p>Manage employees, track performance, and oversee organizational structure</p>
     </div> -->
 
-    <!-- Overview Stats Cards -->
-    <div class="stats-grid">
+    <!-- Topbar Cards -->
+    <div class="topbar-cards">
       <div class="stat-card">
-        <div class="stat-icon">
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-          </svg>
-        </div>
-        <div class="stat-content">
-          <h3>{{ stats.total_employees }}</h3>
-          <p>Total Employees</p>
-        </div>
+        <h3>Total Employees</h3>
+        <div class="stat-number">{{ stats.total_employees }} <span class="stat-subtext">({{ stats.active_employees }} active)</span></div>
       </div>
-
       <div class="stat-card">
-        <div class="stat-icon">
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-        </div>
-        <div class="stat-content">
-          <h3>{{ stats.active_employees }}</h3>
-          <p>Active Employees</p>
-        </div>
+        <h3>Total Managers</h3>
+        <div class="stat-number">{{ stats.total_managers }}</div>
       </div>
-
       <div class="stat-card">
-        <div class="stat-icon">
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-          </svg>
-        </div>
-        <div class="stat-content">
-          <h3>{{ stats.total_managers }}</h3>
-          <p>Managers</p>
-        </div>
+        <h3>Active Employees</h3>
+        <div class="stat-number">{{ stats.active_employees }}</div>
       </div>
-
       <div class="stat-card">
-        <div class="stat-icon">
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-          </svg>
-        </div>
-        <div class="stat-content">
-          <h3>{{ stats.new_joins_this_month }}</h3>
-          <p>New This Month</p>
-        </div>
+        <h3>New This Month</h3>
+        <div class="stat-number">{{ stats.new_joins_this_month }}</div>
       </div>
     </div>
 
@@ -340,7 +309,10 @@ const loadEmployees = async () => {
 const loadStats = async () => {
   try {
     const response = await api.get('/employees/stats')
-    stats.value = response.data.data
+    const data = response.data.data || response.data
+    if (data && typeof data === 'object') {
+      stats.value = data
+    }
   } catch (error) {
     console.error('Error loading stats:', error)
   }
@@ -451,9 +423,10 @@ onMounted(async () => {
   font-size: 1.125rem;
 }
 
-.stats-grid {
+/* Topbar Cards */
+.topbar-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
   margin-bottom: 2rem;
 }
@@ -463,26 +436,34 @@ onMounted(async () => {
   border-radius: 1rem;
   padding: 1.5rem;
   border: 1px solid rgba(56, 78, 116, 0.1);
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+  text-align: center;
+  transition: all 0.3s ease;
 }
 
-.stat-icon {
+.stat-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(56, 78, 116, 0.3);
+}
+
+.stat-card h3 {
   color: #384e74;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
-.stat-content h3 {
+.stat-number {
   color: #384e74;
   font-size: 2rem;
   font-weight: 700;
-  margin: 0;
 }
 
-.stat-content p {
+.stat-subtext {
   color: #9CA3AF;
   font-size: 0.875rem;
-  margin: 0.25rem 0 0 0;
+  font-weight: 500;
 }
 
 .filters-section {

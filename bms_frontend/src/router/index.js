@@ -94,9 +94,33 @@ const routes = [
     meta: { requiresAuth: true, layout: 'dashboard', requiresRole: 'admin', title: 'Edit Branch' }
   },
   {
+    path: '/admin/departments',
+    name: 'AdminDepartments',
+    component: () => import('../views/Admin/Department/Departments.vue'),
+    meta: { requiresAuth: true, layout: 'dashboard', requiresRole: 'admin', title: 'Department Management' }
+  },
+  {
+    path: '/admin/departments/create',
+    name: 'AdminDepartmentCreate',
+    component: () => import('../views/Admin/Department/DepartmentForm.vue'),
+    meta: { requiresAuth: true, layout: 'dashboard', requiresRole: 'admin', title: 'Create Department' }
+  },
+  {
+    path: '/admin/departments/:id',
+    name: 'AdminDepartmentShow',
+    component: () => import('../views/Admin/Department/DepartmentShow.vue'),
+    meta: { requiresAuth: true, layout: 'dashboard', requiresRole: 'admin', title: 'Department Details' }
+  },
+  {
+    path: '/admin/departments/:id/edit',
+    name: 'AdminDepartmentEdit',
+    component: () => import('../views/Admin/Department/DepartmentForm.vue'),
+    meta: { requiresAuth: true, layout: 'dashboard', requiresRole: 'admin', title: 'Edit Department' }
+  },
+  {
     path: '/admin/projects',
     name: 'AdminProjects',
-    component: () => import('../views/Admin/Projects.vue'),
+    component: () => import('../views/Admin/Project/Projects.vue'),
     meta: { requiresAuth: true, layout: 'dashboard', requiresRole: 'admin', title: 'Project Management' }
   },
   {

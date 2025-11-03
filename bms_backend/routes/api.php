@@ -14,6 +14,8 @@ use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\AnnouncementController;
 use App\Http\Controllers\Api\AuditLogController;
+use App\Http\Controllers\Api\PerformanceController;
+use App\Http\Controllers\Api\DepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +48,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('branches/{branch}/activate', [BranchController::class, 'activate']);
     Route::post('branches/{branch}/deactivate', [BranchController::class, 'deactivate']);
     Route::get('branches/performance', [BranchController::class, 'performance']);
+
+    // Departments
+    Route::apiResource('departments', DepartmentController::class);
+    Route::post('departments/{department}/activate', [DepartmentController::class, 'activate']);
+    Route::post('departments/{department}/deactivate', [DepartmentController::class, 'deactivate']);
+    Route::get('branches/{branch}/departments', [DepartmentController::class, 'getByBranch']);
 
     // Users
     Route::apiResource('users', UserController::class);
@@ -86,6 +94,15 @@ Route::middleware('auth:sanctum')->group(function () {
     // Announcements
     Route::apiResource('announcements', AnnouncementController::class);
     Route::get('announcements/active/list', [AnnouncementController::class, 'activeAnnouncements']);
+
+    // Performance
+    Route::prefix('performance')->group(function () {
+        Route::post('calculate/{employeeId}', [PerformanceController::class, 'calculateEmployeePerformance']);
+        Route::get('employee/{employeeId}', [PerformanceController::class, 'getEmployeePerformance']);
+        Route::post('calculate-all', [PerformanceController::class, 'calculateAllPerformances']);
+        Route::get('stats', [PerformanceController::class, 'getPerformanceStats']);
+        Route::put('employee/{employeeId}', [PerformanceController::class, 'updatePerformance']);
+    });
 
     // Audit Logs
     Route::get('audit-logs', [AuditLogController::class, 'index']);

@@ -48,8 +48,8 @@
               </svg>
             </div>
             <div class="card-content">
-              <h3>{{ employee.performance_rating || 'N/A' }}</h3>
-              <p>Performance Rating</p>
+              <h3>{{ performanceData?.score ? performanceData.score.toFixed(1) + '%' : 'N/A' }}</h3>
+              <p>Performance Score</p>
             </div>
           </div>
 
@@ -144,7 +144,7 @@
           </div>
           <div class="detail-item">
             <label>Status</label>
-            <span :class="`status-badge status-${employee.status}`">{{ employee.status.replace('_', ' ') }}</span>
+            <span :class="`status-badge status-${employee.status || 'active'}`">{{ employee.status?.replace('_', ' ') || 'Not specified' }}</span>
           </div>
           <div class="detail-item">
             <label>Performance Rating</label>
@@ -200,7 +200,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { storeToRefs } from 'pinia'
 import { api } from '@/services/api'
-import DeleteEmployeeModal from '@/components/employees/DeleteEmployeeModal.vue'
+import DeleteEmployeeModal from './DeleteEmployeeModal.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -208,6 +208,7 @@ const authStore = useAuthStore()
 const { isInitialized, user } = storeToRefs(authStore)
 
 const employee = ref({})
+const performanceData = ref(null)
 const loading = ref(false)
 const showDeleteModal = ref(false)
 
@@ -232,6 +233,17 @@ const fetchEmployee = async () => {
   }
 }
 
+const fetchPerformanceData = async () => {
+  try {
+    const response = await api.get(`/performance/employee/${route.params.id}`)
+    if (response.success) {
+      performanceData.value = response.data
+    }
+  } catch (error) {
+    console.error('Error fetching performance data:', error)
+  }
+}
+
 const handleDeleteEmployee = async (reason: string) => {
   try {
     const response = await api.delete(`/users/${employee.value.id}`, { reason })
@@ -245,6 +257,7 @@ const handleDeleteEmployee = async (reason: string) => {
 
 onMounted(() => {
   fetchEmployee()
+  fetchPerformanceData()
 })
 </script>
 

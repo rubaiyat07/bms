@@ -34,6 +34,32 @@
             </div>
 
             <div class="form-group">
+              <label for="password">Password *</label>
+              <input
+                id="password"
+                v-model="form.password"
+                type="password"
+                required
+                placeholder="Enter password"
+                :class="{ 'error': errors.password }"
+              />
+              <span v-if="errors.password" class="error-message">{{ errors.password }}</span>
+            </div>
+
+            <div class="form-group">
+              <label for="password_confirmation">Confirm Password *</label>
+              <input
+                id="password_confirmation"
+                v-model="form.password_confirmation"
+                type="password"
+                required
+                placeholder="Confirm password"
+                :class="{ 'error': errors.password_confirmation }"
+              />
+              <span v-if="errors.password_confirmation" class="error-message">{{ errors.password_confirmation }}</span>
+            </div>
+
+            <div class="form-group">
               <label for="phone">Phone Number</label>
               <input
                 id="phone"
@@ -89,19 +115,6 @@
             <h3>Employment Information</h3>
 
             <div class="form-group">
-              <label for="employee_id">Employee ID *</label>
-              <input
-                id="employee_id"
-                v-model="form.employee_id"
-                type="text"
-                required
-                placeholder="Enter employee ID"
-                :class="{ 'error': errors.employee_id }"
-              />
-              <span v-if="errors.employee_id" class="error-message">{{ errors.employee_id }}</span>
-            </div>
-
-            <div class="form-group">
               <label for="designation">Designation *</label>
               <input
                 id="designation"
@@ -115,15 +128,19 @@
             </div>
 
             <div class="form-group">
-              <label for="department">Department</label>
-              <input
-                id="department"
-                v-model="form.department"
-                type="text"
-                placeholder="Enter department"
-                :class="{ 'error': errors.department }"
-              />
-              <span v-if="errors.department" class="error-message">{{ errors.department }}</span>
+              <label for="department_id">Department</label>
+              <select
+                id="department_id"
+                v-model="form.department_id"
+                :class="{ 'error': errors.department_id }"
+                :disabled="!form.branch_id"
+              >
+                <option value="">Select Department</option>
+                <option v-for="department in filteredDepartments" :key="department.id" :value="department.id">
+                  {{ department.name }}
+                </option>
+              </select>
+              <span v-if="errors.department_id" class="error-message">{{ errors.department_id }}</span>
             </div>
 
             <div class="form-group">
@@ -133,6 +150,7 @@
                 v-model="form.branch_id"
                 required
                 :class="{ 'error': errors.branch_id }"
+                @change="onBranchChange"
               >
                 <option value="">Select Branch</option>
                 <option v-for="branch in branches" :key="branch.id" :value="branch.id">
@@ -198,21 +216,7 @@
               <span v-if="errors.status" class="error-message">{{ errors.status }}</span>
             </div>
 
-            <div class="form-group">
-              <label for="performance_rating">Performance Rating</label>
-              <select
-                id="performance_rating"
-                v-model="form.performance_rating"
-                :class="{ 'error': errors.performance_rating }"
-              >
-                <option value="">Select Rating</option>
-                <option value="excellent">Excellent</option>
-                <option value="good">Good</option>
-                <option value="average">Average</option>
-                <option value="weak">Weak</option>
-              </select>
-              <span v-if="errors.performance_rating" class="error-message">{{ errors.performance_rating }}</span>
-            </div>
+
           </div>
         </div>
 
@@ -228,7 +232,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { api } from '@/services/api'
@@ -240,24 +244,26 @@ const isEditing = ref(false)
 const loading = ref(false)
 const branches = ref([])
 const managers = ref([])
+const departments = ref([])
+const filteredDepartments = ref([])
 const errors = ref({})
 
 const form = ref({
   name: '',
   email: '',
+  password: '',
+  password_confirmation: '',
   phone: '',
   date_of_birth: '',
   gender: '',
   address: '',
-  employee_id: '',
   designation: '',
-  department: '',
+  department_id: '',
   branch_id: '',
   manager_id: '',
   join_date: '',
   salary: '',
-  status: 'active',
-  performance_rating: ''
+  status: 'active'
 })
 
 const fetchBranches = async () => {
@@ -282,6 +288,17 @@ const fetchManagers = async () => {
   }
 }
 
+const fetchDepartments = async () => {
+  try {
+    const response = await api.get('/departments')
+    if (response.success) {
+      departments.value = response.data.data
+    }
+  } catch (error) {
+    console.error('Error fetching departments:', error)
+  }
+}
+
 const fetchEmployee = async (id) => {
   try {
     loading.value = true
@@ -295,15 +312,14 @@ const fetchEmployee = async (id) => {
         date_of_birth: employee.date_of_birth ? employee.date_of_birth.split('T')[0] : '',
         gender: employee.gender || '',
         address: employee.address || '',
-        employee_id: employee.employee_id || '',
         designation: employee.designation || '',
-        department: employee.department || '',
+        department_id: employee.department_id || '',
         branch_id: employee.branch_id || '',
         manager_id: employee.manager_id || '',
         join_date: employee.join_date ? employee.join_date.split('T')[0] : '',
         salary: employee.salary || '',
         status: employee.status || 'active',
-        performance_rating: employee.performance_rating || ''
+
       }
     }
   } catch (error) {
@@ -311,6 +327,11 @@ const fetchEmployee = async (id) => {
   } finally {
     loading.value = false
   }
+}
+
+const onBranchChange = () => {
+  form.value.department_id = ''
+  filteredDepartments.value = departments.value.filter(dept => dept.branch_id === form.value.branch_id)
 }
 
 const handleSubmit = async () => {
@@ -347,6 +368,7 @@ const handleSubmit = async () => {
 onMounted(() => {
   fetchBranches()
   fetchManagers()
+  fetchDepartments()
 
   if (route.params.id) {
     isEditing.value = true

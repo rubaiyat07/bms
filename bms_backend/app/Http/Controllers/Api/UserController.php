@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $query = User::with(['roles', 'branch', 'manager']);
+        $query = User::with(['roles', 'branch', 'department', 'manager']);
 
         // Filter by status
         if ($request->has('status') && $request->status !== '') {
@@ -84,6 +84,7 @@ class UserController extends Controller
             'employee_id' => 'nullable|string|unique:users',
             'designation' => 'nullable|string|max:255',
             'branch_id' => 'nullable|exists:branches,id',
+            'department_id' => 'nullable|exists:departments,id',
             'manager_id' => 'nullable|exists:users,id',
             'join_date' => 'nullable|date',
             'status' => 'required|in:active,inactive,suspended,on_leave',
@@ -118,6 +119,7 @@ class UserController extends Controller
                 'employee_id' => $employeeId,
                 'designation' => $request->designation,
                 'branch_id' => $request->branch_id,
+                'department_id' => $request->department_id,
                 'manager_id' => $request->manager_id,
                 'join_date' => $request->join_date,
                 'status' => $request->status,
@@ -142,7 +144,7 @@ class UserController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Employee created successfully',
-                'data' => $user->load('roles', 'branch', 'manager')
+                'data' => $user->load('roles', 'branch', 'department', 'manager')
             ], 201);
         } catch (\Exception $e) {
             DB::rollback();
@@ -160,7 +162,7 @@ class UserController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => $user->load(['roles', 'branch', 'managedBranch'])
+            'data' => $user->load(['roles', 'branch', 'department', 'managedBranch'])
         ]);
     }
 
@@ -175,6 +177,7 @@ class UserController extends Controller
             'phone' => 'nullable|string|max:20',
             'employee_id' => 'nullable|string|unique:users,employee_id,' . $user->id,
             'branch_id' => 'nullable|exists:branches,id',
+            'department_id' => 'nullable|exists:departments,id',
             'status' => 'sometimes|required|in:active,inactive,suspended',
             'role_ids' => 'nullable|array',
             'role_ids.*' => 'exists:roles,id'
@@ -188,7 +191,7 @@ class UserController extends Controller
             ], 422);
         }
 
-        $oldValues = $user->only(['name', 'email', 'phone', 'employee_id', 'branch_id', 'status']);
+        $oldValues = $user->only(['name', 'email', 'phone', 'employee_id', 'branch_id', 'department_id', 'status']);
 
         DB::beginTransaction();
         try {
@@ -207,7 +210,7 @@ class UserController extends Controller
                 $user->id,
                 'User updated',
                 $oldValues,
-                $user->only(['name', 'email', 'phone', 'employee_id', 'branch_id', 'status'])
+                $user->only(['name', 'email', 'phone', 'employee_id', 'branch_id', 'department_id', 'status'])
             );
 
             DB::commit();
@@ -215,7 +218,7 @@ class UserController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'User updated successfully',
-                'data' => $user->load('roles', 'branch')
+                'data' => $user->load('roles', 'branch', 'department')
             ]);
         } catch (\Exception $e) {
             DB::rollback();
@@ -402,26 +405,33 @@ class UserController extends Controller
      */
     public function getStats()
     {
-        $stats = [
-            'total_employees' => User::employees()->count(),
-            'active_employees' => User::activeEmployees()->count(),
-            'total_managers' => User::managers()->count(),
-            'new_joins_this_month' => User::newJoinsThisMonth()->count(),
-            'top_performer' => User::where('performance_rating', 'excellent')
-                ->with('branch')
-                ->first(),
-            'performance_distribution' => [
-                'excellent' => User::where('performance_rating', 'excellent')->count(),
-                'good' => User::where('performance_rating', 'good')->count(),
-                'average' => User::where('performance_rating', 'average')->count(),
-                'weak' => User::where('performance_rating', 'weak')->count(),
-            ]
-        ];
+        try {
+            $stats = [
+                'total_employees' => User::employees()->count(),
+                'active_employees' => User::activeEmployees()->count(),
+                'total_managers' => User::managers()->count(),
+                'new_joins_this_month' => User::newJoinsThisMonth()->count(),
+                'top_performer' => User::where('performance_rating', 'excellent')
+                    ->with('branch')
+                    ->first(),
+                'performance_distribution' => [
+                    'excellent' => User::where('performance_rating', 'excellent')->count(),
+                    'good' => User::where('performance_rating', 'good')->count(),
+                    'average' => User::where('performance_rating', 'average')->count(),
+                    'weak' => User::where('performance_rating', 'weak')->count(),
+                ]
+            ];
 
-        return response()->json([
-            'success' => true,
-            'data' => $stats
-        ]);
+            return response()->json([
+                'success' => true,
+                'data' => $stats
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to load employee statistics'
+            ], 500);
+        }
     }
 
     /**

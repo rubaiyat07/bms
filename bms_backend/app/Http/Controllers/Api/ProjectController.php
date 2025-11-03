@@ -16,7 +16,7 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Project::with(['branch', 'creator', 'transactions']);
+        $query = Project::with(['branch', 'creator', 'manager', 'members', 'tasks']);
 
         // Filter by status
         if ($request->has('status') && $request->status !== '') {
@@ -26,6 +26,19 @@ class ProjectController extends Controller
         // Filter by branch
         if ($request->has('branch_id') && $request->branch_id !== '') {
             $query->where('branch_id', $request->branch_id);
+        }
+
+        // Filter by manager
+        if ($request->has('manager_id') && $request->manager_id !== '') {
+            $query->where('manager_id', $request->manager_id);
+        }
+
+        // Filter by date range
+        if ($request->has('start_date') && $request->start_date !== '') {
+            $query->where('start_date', '>=', $request->start_date);
+        }
+        if ($request->has('end_date') && $request->end_date !== '') {
+            $query->where('end_date', '<=', $request->end_date);
         }
 
         // Search by title or description
@@ -38,6 +51,19 @@ class ProjectController extends Controller
         }
 
         $projects = $query->paginate(15);
+
+        // Add calculated fields to each project
+        $projects->through(function ($project) {
+            $project->tasks_count = $project->tasks->count();
+            $project->completed_tasks_count = $project->tasks->where('status', 'completed')->count();
+            $project->progress_percentage = $project->progress_percentage;
+            $project->performance_score = $project->performance_score;
+            $project->overdue_days = $project->overdue_days;
+            $project->team_efficiency = $project->team_efficiency;
+            $project->priority = $project->priority;
+            $project->performance_remark = $project->performance_remark;
+            return $project;
+        });
 
         return response()->json([
             'success' => true,

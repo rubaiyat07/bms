@@ -6,166 +6,62 @@
     </div>
 
     <div class="projects-content">
-      <div class="projects-filters">
-        <div class="filter-group">
-          <label>Status:</label>
-          <select v-model="statusFilter" class="filter-select">
-            <option value="">All Status</option>
-            <option value="active">Active</option>
-            <option value="completed">Completed</option>
-            <option value="on-hold">On Hold</option>
-            <option value="cancelled">Cancelled</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label>Branch:</label>
-          <select v-model="branchFilter" class="filter-select">
-            <option value="">All Branches</option>
-            <option v-for="branch in branches" :key="branch.id" :value="branch.id">
-              {{ branch.name }}
-            </option>
-          </select>
-        </div>
-        <button @click="clearFilters" class="btn btn-secondary">Clear Filters</button>
-      </div>
-
-      <div class="projects-grid">
-        <div v-for="project in filteredProjects" :key="project.id" class="project-card">
-          <div class="project-header">
-            <h3>{{ project.name }}</h3>
-            <span :class="`status-badge status-${project.status}`">
-              {{ project.status }}
-            </span>
-          </div>
-          <div class="project-details">
-            <p><strong>Branch:</strong> {{ project.branch }}</p>
-            <p><strong>Manager:</strong> {{ project.manager }}</p>
-            <p><strong>Team Size:</strong> {{ project.team_size }}</p>
-            <p><strong>Start Date:</strong> {{ formatDate(project.start_date) }}</p>
-            <p><strong>End Date:</strong> {{ formatDate(project.end_date) }}</p>
-            <div class="progress-bar">
-              <div class="progress-fill" :style="{ width: project.progress + '%' }"></div>
-            </div>
-            <p class="progress-text">{{ project.progress }}% Complete</p>
-          </div>
-          <div class="project-actions">
-            <button @click="viewProject(project)" class="btn btn-sm btn-primary">View Details</button>
-            <button @click="editProject(project)" class="btn btn-sm btn-secondary">Edit</button>
-          </div>
-        </div>
-      </div>
-
+      <!-- Dashboard Metrics -->
       <div class="projects-stats">
         <div class="stat-card">
           <h3>Total Projects</h3>
-          <div class="stat-number">{{ projects.length }}</div>
+          <div class="stat-number">{{ metrics.total_projects }}</div>
         </div>
         <div class="stat-card">
           <h3>Active Projects</h3>
-          <div class="stat-number">{{ activeProjectsCount }}</div>
+          <div class="stat-number">{{ metrics.active_projects }}</div>
         </div>
         <div class="stat-card">
           <h3>Completed Projects</h3>
-          <div class="stat-number">{{ completedProjectsCount }}</div>
+          <div class="stat-number">{{ metrics.completed_projects }}</div>
         </div>
         <div class="stat-card">
-          <h3>Average Progress</h3>
-          <div class="stat-number">{{ averageProgress }}%</div>
+          <h3>Average Completion Rate</h3>
+          <div class="stat-number">{{ metrics.average_completion_rate }}%</div>
         </div>
       </div>
+
+      <!-- Projects Table Component -->
+      <ProjectsTable />
     </div>
   </div>
 </template>
 
-<script setup>
-import { ref, computed } from 'vue'
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import ProjectsTable from './ProjectsTable.vue'
+import axios from 'axios'
 
-// Mock data - replace with API calls
-const projects = ref([
-  {
-    id: 1,
-    name: 'Website Redesign',
-    branch: 'Main Branch',
-    manager: 'John Doe',
-    team_size: 5,
-    status: 'active',
-    start_date: '2024-01-15',
-    end_date: '2024-03-15',
-    progress: 75
-  },
-  {
-    id: 2,
-    name: 'Mobile App Development',
-    branch: 'North Branch',
-    manager: 'Jane Smith',
-    team_size: 8,
-    status: 'active',
-    start_date: '2024-02-01',
-    end_date: '2024-05-01',
-    progress: 45
-  },
-  {
-    id: 3,
-    name: 'Database Migration',
-    branch: 'South Branch',
-    manager: 'Bob Johnson',
-    team_size: 3,
-    status: 'completed',
-    start_date: '2023-11-01',
-    end_date: '2024-01-15',
-    progress: 100
+// Dashboard metrics
+const metrics = ref({
+  total_projects: 0,
+  active_projects: 0,
+  completed_projects: 0,
+  delayed_projects: 0,
+  average_completion_rate: 0
+})
+
+const loading = ref(false)
+
+onMounted(() => {
+  fetchDashboardMetrics()
+})
+
+const fetchDashboardMetrics = async () => {
+  loading.value = true
+  try {
+    const response = await axios.get('/api/dashboard/projects')
+    metrics.value = response.data
+  } catch (error) {
+    console.error('Error fetching dashboard metrics:', error)
+  } finally {
+    loading.value = false
   }
-])
-
-const branches = ref([
-  { id: 1, name: 'Main Branch' },
-  { id: 2, name: 'North Branch' },
-  { id: 3, name: 'South Branch' }
-])
-
-const statusFilter = ref('')
-const branchFilter = ref('')
-
-const filteredProjects = computed(() => {
-  return projects.value.filter(project => {
-    const statusMatch = !statusFilter.value || project.status === statusFilter.value
-    const branchMatch = !branchFilter.value || project.branch === branches.value.find(b => b.id == branchFilter.value)?.name
-    return statusMatch && branchMatch
-  })
-})
-
-const activeProjectsCount = computed(() => {
-  return projects.value.filter(project => project.status === 'active').length
-})
-
-const completedProjectsCount = computed(() => {
-  return projects.value.filter(project => project.status === 'completed').length
-})
-
-const averageProgress = computed(() => {
-  if (projects.value.length === 0) return 0
-  const total = projects.value.reduce((sum, project) => sum + project.progress, 0)
-  return Math.round(total / projects.value.length)
-})
-
-const formatDate = (dateString) => {
-  if (!dateString) return 'N/A'
-  return new Date(dateString).toLocaleDateString()
-}
-
-const clearFilters = () => {
-  statusFilter.value = ''
-  branchFilter.value = ''
-}
-
-const viewProject = (project) => {
-  console.log('View project:', project)
-  // Implement view project logic
-}
-
-const editProject = (project) => {
-  console.log('Edit project:', project)
-  // Implement edit project logic
 }
 </script>
 
